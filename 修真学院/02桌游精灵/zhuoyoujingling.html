@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<script src="lib/jquery-1.11.1/jquery.min.js"></script>
+		<style>
+			*{
+				padding: 0px;
+				margin:0px;
+				list-style: none;
+				font-size:12px;
+			}	
+			#box,#next,#startDiv{
+				width:200px;
+				height:300px;
+				border:1px solid blue;
+				margin:0px auto;
+			}
+			#box button{
+				width:180px;
+				height:30px;
+				margin-left:10px;
+			}
+			#next{
+				display:none;
+			}
+			.title{
+				background:blue;
+				color:#fff;
+				padding:10px 10px;
+			}
+			.titleone{
+				font-size:20px;
+			}
+			.tishi{
+				font-size:6px;
+				color:#ccc;
+			}
+			#next li{
+				height:30px;
+				line-height:30px;
+			}
+			#next .p{
+				height:30px;
+				line-height:30px;
+				background:#ccc;
+			}
+			.border{
+				border:1px solid #ccc;
+			}
+		</style>
+	</head>
+	
+	<div id="box">
+		<p class="title">杀人游戏</p>
+		<button>简化版</button>
+		<button>警察版</button>
+		<button>3.0</button>
+		<div id="next" >
+			<span class="titleone">杀人游戏简化版</span>
+			<div>
+			
+				<p class="title">总人数</p>
+				<p class="tishi border">这版本人数在3到十八之间</p>
+				<li class="border">人数<input type="text" id="number"></li>
+				<p class="border p">杀手</p>
+				<li class="border">人数<input type="text" id="numberone"></li>
+				<p class="border p">平民</p>
+				<li class="border">人数<input type="text" id="numbertwo"></li>	
+				<button id="fanhui">返回列表</button>
+				<button id="start">开始游戏</button>
+			</div>
+		<div>
+	<div id="startDiv" style="display: none">
+		<h1>这是开始游戏的页面</h1>
+	</div>
+	</div>
+	<!-- <span>点击简化版，在总人数中输入人数，自动分配角色</span>/ -->
+	<script>
+		$('button:eq(0)').click(function(){
+			$('#box>span,#box>button,#box>.title').hide();
+			$('#next').show();
+			$('startDiv').hide();
+		})
+		$('#fanhui').click(function(){
+			$('#box>span,#box>button,#box>.title').show();
+			$('#next').hide();
+			$('startDiv').hide();
+		})
+		$('#start').click(function(){
+			$('#box>span,#box>button,#box>.title').hide();
+			$('#next').hide();
+			$('#startDiv').show();
+		})
+		$('#next input:eq(0)').change(function(){
+			var $daoru= $('#next input:eq(0)').val();
+			console.log($daoru)
+			 if(3<=$daoru&&$daoru<=8){
+				$('#numberone').val('1')
+				$('#numbertwo').val($daoru-1);
+			}else if(8<$daoru&&$daoru<=11){
+				$('#numberone').val('2')
+				$('#numbertwo').val($daoru-2);
+			}else if(11<$daoru&&$daoru<=15){
+				$('#numberone').val('3')
+				$('#numbertwo').val($daoru-3);
+			}else if(15<$daoru&&$daoru<=18){
+				$('#numberone').val('4')
+				$('#numbertwo').val($daoru-4);
+			}else{
+				alert('请输入正确地数字')
+			}
+		})
+	</script>
+
+</html>
