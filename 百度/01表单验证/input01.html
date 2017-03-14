@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>表单验证1</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		span{
+			font-size: 20px;
+			font-weight: 800;
+		}
+		#text{
+			width: 200px;
+			height:30px;
+			border:1px solid #ccc;
+			border-radius:10px;
+			margin-left:20px;
+		}
+		p{
+			font-size: 10px;
+			color:#ccc;
+			margin-left:65px;
+		}
+		#submit{
+			background: blue;
+			border:none;
+			width:50px;
+			height:30px;
+			border-radius: 10px;
+		}
+	</style>
+</head>
+<body>
+	<span> 名称</span>
+	<input id='text' type="text" pattern="" required name="a">
+	<input type="submit" value="验证"  id="submit" name="a">
+	<p id="p">必填,长度必须为4-18个字符</p>
+	<script type="text/javascript">
+	var input=document.getElementById('input');
+	var text=document.getElementById('text');
+	var submit=document.getElementById('submit');
+	var p=document.getElementById('p');
+	submit.onclick=function(){
+		console.log('a')
+		console.log(text.value)
+		if(text.value=='' || text.value==null) {
+			p.innerHTML='<span style="color:red;font-size:10px">姓名不能为空<span>'
+			text.style.border='1px solid red'
+				console.log(1)
+		}
+		var pattern=/[^]{4,14}$/;
+		var a=pattern.test(text.value);
+		if(a){
+			p.innerHTML='<span style="color:cyan;font-size:10px">格式正确</span>'
+			text.style.border='1px solid cyan'
+		}else{
+			p.innerHTML='<span style="color:red;font-size:10px">姓名不能为空<span>'
+			text.value=''
+			text.style.border='1px solid red'
+		}
+	}
+	</script>
+</body>
+</html>
