@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>表单验证1</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		span{
+			font-size: 20px;
+			font-weight: 800;
+		}
+		input{
+			width: 200px;
+			height:30px;
+			border:1px solid #ccc;
+			border-radius:10px;
+			margin-left:25px;
+			outline: none;
+		}
+		.inputone{
+			border:1px solid #56D9F4;
+		}
+		.inputtwo{
+			border:1px solid #f498BA;
+		}
+		.inputthree{
+			border:1px solid #9CE8C3;
+		}
+
+		p{
+			font-size: 10px;
+			color:#ccc;
+			visibility: hidden;
+			margin-left:85px;
+		}
+		.one{
+			color:#56D9F4;
+		}
+		.two{
+			color:#f498BA;
+		}
+		.three{
+			color:#9CE8C3;
+		}
+		#submit{
+			background: blue;
+			border:none;
+			width:50px;
+			height:30px;
+			border-radius: 10px;
+			margin-left: 300px;
+		}
+	</style>
+</head>
+<body>
+	<span> 名  称</span>
+	<input id='names' type="text" pattern="" required name="a">
+	<p class="p">必填,长度必须为4-18个字符</p>
+	<span> 密  码</span>
+	<input type="password" id="passwordone" name="a">
+	<p class="p">请输入大于6位数的密码</p>
+	<span> 确 认</span>
+	<input type="password" id="passwordtwo" name="a">
+	<p class="p">请再次输入密码</p>
+	<span> 邮 箱</span>
+	<input type="email" id="email" name="a">
+	<p class="p">必填,正确的邮箱方便联系您</p>
+	<span> 电 话</span>
+	<input type="tel" id="tel" name="a">
+	<p class="p">必填,请填写电话号码</p>
+	<input type="submit" value="验证"  id="submit" name="a">
+	<script type="text/javascript">
+	var input=document.getElementsByTagName('input');
+	var p=document.getElementsByTagName('p');
+	console.log(p)
+	for(var i=0;i<input.length-1;i++){
+		 input[i].index=i;
+		input[i].onfocus=function(){
+			var index=this.index;
+			p[index].style.visibility='visible';
+			input[index].className='inputone'
+			p[index].className='one'
+			console.log(index);
+		}
+		var att=[];
+		input[i].onblur=function(){
+			var index=this.index;
+			switch(index){
+				case 0:
+					var pattern=/[^]{4,14}$/;
+					var a=pattern.test(input[index].value);
+					if(input[index].value=='' || input[index].value==null) {
+						p[index].innerHTML='姓名不能为空'
+						input[index].className='inputtwo'
+						p[index].className='two'
+						att[index]=false;
+					}else if(input[index].value!=''&&a&&input[index].value!=null){
+						p[index].innerHTML='格式正确'
+						input[index].className='inputthree'
+						p[index].className='three'
+						att[index]=true;
+					}else {
+						p[index].innerHTML='请填写正确的格式'
+						input[index].className='inputtwo'
+						p[index].className='two'
+						att[index]=false
+					}
+					break;
+				case 1:
+					var pattern=/[^]{6,}/
+					var a=pattern.test(input[index].value);
+					if(input[index].value=='' || input[index].value==null) {
+						p[index].innerHTML='密码不能为空'
+						input[index].className='inputtwo'
+						p[index].className='two'
+						att[index]=false;
+					}else if(input[index].value!=''&&a&&input[index].value!=null){
+						p[index].innerHTML='格式正确'
+						input[index].className='inputthree'
+						p[index].className='three'
+						att[index]=true;
+					}else {
+						p[index].innerHTML='请填写正确的格式'
+						input[index].className='inputtwo'
+						p[index].className='two'
+						att[index]=false
+					}
+					break;
+				case 2:
+					var pattern=input[index-1].value;
+					var a=(pattern===input[index].value);
+					if(input[index].value=='' || input[index].value==null) {
+						p[index].innerHTML='密码不能为空'
+						input[index].className='inputtwo'
+						p[index].className='two'
+						att[index]=false;
+					}else if(input[index].value!=''&&a&&input[index].value!=null){
+						p[index].innerHTML='格式正确'
+						input[index].className='inputthree'
+						p[index].className='three'
+						att[index]=true;
+					}else {
+						p[index].innerHTML='密码与上一个密码不一致'
+						input[index].className='inputtwo'
+						p[index].className='two'
+						att[index]=false
+					}
+					break;
+				case 3:
+					var pattern=/[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
+					var a=pattern.test(input[index].value);
+					if(input[index].value=='' || input[index].value==null) {
+						p[index].innerHTML='邮箱不能为空'
+						input[index].className='inputtwo'
+						p[index].className='two'
+						att[index]=false;
+					}else if(input[index].value!=''&&a&&input[index].value!=null){
+						p[index].innerHTML='格式正确'
+						input[index].className='inputthree'
+						p[index].className='three'
+						att[index]=true;
+					}else {
+						p[index].innerHTML='请填写正确的格式'
+						input[index].className='inputtwo'
+						p[index].className='two'
+						att[index]=false
+					}
+					break;
+				case 4:
+					var pattern=/^1[34578]\d{9}$/;
+					var a=pattern.test(input[index].value);
+					if(input[index].value=='' || input[index].value==null) {
+						p[index].innerHTML='电话号码不能为空'
+						input[index].className='inputtwo'
+						p[index].className='two'
+						att[index]=false;
+					}else if(input[index].value!=''&&a&&input[index].value!=null){
+						p[index].innerHTML='格式正确'
+						input[index].className='inputthree'
+						p[index].className='three'
+						att[index]=true;
+					}else {
+						p[index].innerHTML='请填写正确的格式'
+						input[index].className='inputtwo'
+						p[index].className='two'
+						att[index]=false
+					}
+					break;
+				}
+				console.log(att);
+
+			}
+		}
+		submit.onclick=function(){
+			var end;
+			for(var i=0;i<input.length-1;i++){
+				if(att[i]){
+					end=true;
+				}else{
+					alert('输入有误');
+					return;
+				}
+			}
+			if(end){
+				alert('注册成功');
+			}
+		}
+	</script>
+</body>
+</html>
