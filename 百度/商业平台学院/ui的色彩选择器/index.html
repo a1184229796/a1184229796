@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		*{
+			padding:0px;
+			margin:0px;
+
+		}
+		canvas{
+			border:1px solid red;
+		}
+		#divOne{
+			width:100px;
+			height:100px;
+			border:1px solid red;
+			float:right;
+		}
+		#div{
+			width:435px;
+			/*border:1px solid red;*/
+		}
+	</style>
+</head>
+<body>
+	<div id="div">
+	<canvas id="canvas" width="300" height="300"></canvas>
+	<canvas id="canvasone" width="20" height="300"></canvas>
+	<div id='divOne'>
+		<span>r</span>
+		<input type="number" max="255" min="0" value='71' name="">
+		<span>g</span>
+		<input type="number" max="255" min="0" value='235' name="">
+		<span>b</span>
+		<input type="number" max="255" min="0" value='255' name="">
+	</div>
+	</div>
+	<script type="text/javascript">
+		var canvas=document.getElementById('canvas');
+		var canvas1=document.getElementById('canvas1');
+		var context=canvas.getContext('2d');
+		var contextone=canvasone.getContext('2d');
+		var input=document.getElementsByTagName('input');
+		draw('#47EBFF','#47EBFF');
+		function  draw(color){//画canva图
+			console.log('a');
+			context.beginPath();
+			context.save();
+			var linear=context.createLinearGradient(0,0,300,300);
+			linear.addColorStop(0,'#ccc');
+			linear.addColorStop(0.8,color);
+			linear.addColorStop(1,'#444');
+			context.fillStyle=linear;
+			context.fillRect(0,0,300,300);
+			context.restore();
+		}
+		(function(){
+			contextone.beginPath();
+			contextone.save();
+			var linear=contextone.createLinearGradient(0,0,20,300);
+			linear.addColorStop(0,'#FF3333');
+			linear.addColorStop(0.2,'#FFF733');
+			linear.addColorStop(0.4,'#33FF33');
+			linear.addColorStop(0.6,'#3333FF');
+			linear.addColorStop(0.8,'#33FFFF');
+			linear.addColorStop(1,'#FF33FF');
+			contextone.fillStyle=linear;
+			contextone.fillRect(0,0,20,300);
+		})()
+		canvasone.onclick=function(e){
+			choose(e,contextone);
+			draw(color);
+		}
+		canvas.onclick=function(e){
+			choose(e,context);
+		}
+		var imgs;
+		canvas.onmousedown=function(e){
+			imgs=context.getImageData(180,299,1,1);
+			a();
+			console.log(imgs);
+			context.beginPath();
+			context.strokeStyle='#fff'
+			context.arc(e.clientX,e.clientY,10,0,Math.PI*2);
+			
+			context.stroke();	
+		}
+		
+		function a(){
+			context.clearRect(0,0,300,300);
+			color='rgb('+imgs.data[0]+','+imgs.data[1]+','+imgs.data[2]+')';
+			console.log(color)
+			draw(color);
+			
+		}
+		function choose(e,contextone){
+			var imgData=contextone.getImageData(0,e.clientY,20,20);
+			color='rgb('+imgData.data[0]+','+imgData.data[1]+','+imgData.data[2]+')';
+			input[0].value=imgData.data[800];
+			input[1].value=imgData.data[801];
+			input[2].value=imgData.data[802];
+		}
+		(function(){
+			for(var i=0;i<input.length;i++){
+				input[i].index=i;
+				
+				input[i].onchange=function(){
+					var r=input[0].value;
+					var g=input[1].value;
+					var b=input[2].value;
+					color='rgb('+r+','+g+','+b+')';
+				draw(color);
+				}
+
+			}
+		})();
+	</script>	
+</body>
+</html>
